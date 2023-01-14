@@ -27,7 +27,7 @@ fileprivate struct OverlayModifier<Overlay: View>: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     
     /// Custom Overlay Modifier
     func overlay<Overlay: View>(

@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Int {
+public extension Int {
     func toString() -> String {
         return .init(self)
     }
