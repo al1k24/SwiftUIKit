@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension EnvironmentValues {
+public extension EnvironmentValues {
     var dismissView: () -> Void {
         if #available(iOS 15.0, *) {
             return dismiss.callAsFunction

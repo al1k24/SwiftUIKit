@@ -59,7 +59,7 @@ fileprivate struct NavigationLinkModifier2<Destination: View>: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     
     /// Custom Navigation Link Modifier
     func navigationLink<Destination: View>(

@@ -27,7 +27,7 @@ fileprivate struct BackgroundModifier<Background: View>: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     
     /// Custom Background Modifier
     func background<Background: View>(

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Button where Label == Image {
+public extension Button where Label == Image {
     init(systemName: String, action: @escaping () -> Void) {
         self.init(action: action, label: { Image(systemName: systemName) })
     }
