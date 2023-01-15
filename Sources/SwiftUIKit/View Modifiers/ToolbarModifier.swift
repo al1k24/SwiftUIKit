@@ -7,55 +7,63 @@
 
 import SwiftUI
 
-public enum ToolbarItemPlacement {
+public enum CustomToolbarItemPlacement {
     case leading
     case trailing
 }
 
-fileprivate struct ToolbarLeadingModifier<Item: View>: ViewModifier {
-    @ViewBuilder var item: () -> Item
+fileprivate struct ToolbarModifier<ToolbarContent: View>: ViewModifier {
+    private let itemPlacement: CustomToolbarItemPlacement
+    @ViewBuilder private let toolbarContent: () -> ToolbarContent
     
-    func body(content: Content) -> some View {
-        if #available(iOS 14.0, *) {
-            content
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading, content: item)
-                }
-        } else {
-            content
-                .navigationBarItems(leading: HStack(content: item))
+    init(
+        _ placement: CustomToolbarItemPlacement,
+        content: @escaping () -> ToolbarContent
+    ) {
+        self.toolbarContent = content
+        self.itemPlacement = placement
+    }
+    
+    @available(iOS 14.0, *)
+    private var placement: ToolbarItemPlacement {
+        switch itemPlacement {
+        case .leading:
+            return .navigationBarLeading
+        case .trailing:
+            return .navigationBarTrailing
         }
     }
-}
-
-fileprivate struct ToolbarTrailingModifier<Item: View>: ViewModifier {
-    @ViewBuilder var item: () -> Item
+    
+    @available(iOS, introduced: 13.0, deprecated: 14.0)
+    private var oldToolbarContent: some View {
+        HStack(content: toolbarContent)
+    }
     
     func body(content: Content) -> some View {
         if #available(iOS 14.0, *) {
             content
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing, content: item)
+                    ToolbarItem(placement: placement, content: toolbarContent)
                 }
         } else {
-            content
-                .navigationBarItems(trailing: HStack(content: item))
+            switch itemPlacement {
+            case .leading:
+                content
+                    .navigationBarItems(leading: oldToolbarContent)
+            case .trailing:
+                content
+                    .navigationBarItems(trailing: oldToolbarContent)
+            }
         }
     }
 }
 
 public extension View {
     
-    @ViewBuilder
     func toolbar<Content: View>(
-        _ placement: ToolbarItemPlacement,
+        _ placement: CustomToolbarItemPlacement,
         content: @escaping () -> Content
     ) -> some View {
-        switch placement {
-        case .leading:
-            modifier(ToolbarLeadingModifier(item: content))
-        case .trailing:
-            modifier(ToolbarTrailingModifier(item: content))
-        }
+        modifier(ToolbarModifier(placement, content: content))
     }
 }
