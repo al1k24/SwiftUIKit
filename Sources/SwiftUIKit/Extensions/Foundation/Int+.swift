@@ -1,5 +1,5 @@
 //
-//  ToString.swift
+//  Int+.swift
 //  
 //
 //  Created by Alik Moldovanu on 15.01.2023.
