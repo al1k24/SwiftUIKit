@@ -9,7 +9,7 @@ import SwiftUI
 
 fileprivate struct OverlayModifier<Overlay: View>: ViewModifier {
     private let alignment: Alignment
-    private let overlay: () -> Overlay
+    @ViewBuilder private let overlay: () -> Overlay
     
     init(alignment: Alignment, overlay: @escaping () -> Overlay) {
         self.alignment = alignment

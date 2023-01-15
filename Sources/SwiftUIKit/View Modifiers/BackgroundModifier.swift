@@ -9,7 +9,7 @@ import SwiftUI
 
 fileprivate struct BackgroundModifier<Background: View>: ViewModifier {
     private let alignment: Alignment
-    private let background: () -> Background
+    @ViewBuilder private let background: () -> Background
     
     init(alignment: Alignment, background: @escaping () -> Background) {
         self.alignment = alignment
