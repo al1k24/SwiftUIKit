@@ -11,10 +11,10 @@ public extension EnvironmentValues {
     var dismissView: () -> Void {
         if #available(iOS 15.0, *) {
             return dismiss.callAsFunction
-        } else {
-            return {
-                presentationMode.wrappedValue.dismiss()
-            }
+        }
+        
+        return {
+            presentationMode.wrappedValue.dismiss()
         }
     }
 }
