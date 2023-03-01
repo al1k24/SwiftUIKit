@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Debug {
+public enum Debug {
     // Available colors
     // Source: - https://unicode.org/emoji/charts/full-emoji-list.html#geometric
     public enum Symbol: String {
@@ -40,8 +40,8 @@ public struct Debug {
     }
     
     public static func log(
-        _ closure: @autoclosure () -> Any,
-        _ symbol: Symbol = .white,
+        closure: @autoclosure () -> Any,
+        symbol: Symbol = .white,
         functionName: StaticString = #function,
         fileName: StaticString = #file,
         lineNumber: Int = #line
@@ -60,23 +60,4 @@ public struct Debug {
         
         print("\(debugSymbol) [Debug] \(formattedDate) [\(swiftFile):\(lineNumber)] \(functionName) > \(closure)")
     }
-}
-
-
-public func DEBUG(
-    _ closure: @autoclosure () -> Any,
-    _ symbol: Debug.Symbol = .white,
-    functionName: StaticString = #function,
-    fileName: StaticString = #file,
-    lineNumber: Int = #line
-) {
-#if DEBUG
-    Debug.log(
-        closure(),
-        symbol,
-        functionName: functionName,
-        fileName: fileName,
-        lineNumber: lineNumber
-    )
-#endif
 }
