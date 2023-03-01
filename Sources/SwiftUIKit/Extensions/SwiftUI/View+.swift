@@ -11,8 +11,4 @@ public extension View {
     func getRect() -> CGRect {
         return UIScreen.main.bounds
     }
-    
-    func getSafeArea() -> UIEdgeInsets {
-        return UIApplication.shared.safeArea
-    }
 }

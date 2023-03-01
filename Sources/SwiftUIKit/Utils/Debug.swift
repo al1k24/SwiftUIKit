@@ -38,7 +38,7 @@ public struct Debug {
         /// ⚪️ Circle
         case white = "\u{26AA}"
     }
-
+    
     public static func log(
         _ closure: @autoclosure () -> Any,
         _ symbol: Symbol = .white,
@@ -50,12 +50,15 @@ public struct Debug {
         let closure: String = .init(describing: closure())
         let functionName: String = .init(describing: functionName)
         
-        let date: String = "\(Date())"
-        let swiftFile: String = fileName.components(separatedBy: "/").last ?? ""
+        let formattedDate: String = Date().formatted(
+            date: .numeric,
+            time: .standard
+        )
         
+        let swiftFile: String = fileName.components(separatedBy: "/").last ?? ""
         let debugSymbol: String = symbol.rawValue
         
-        print("\(debugSymbol) [Debug] \(date) [\(swiftFile):\(lineNumber)] \(functionName) > \(closure)")
+        print("\(debugSymbol) [Debug] \(formattedDate) [\(swiftFile):\(lineNumber)] \(functionName) > \(closure)")
     }
 }
 
